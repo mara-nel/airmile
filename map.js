@@ -1,5 +1,6 @@
 // initialize Leaflet
-var map = L.map('map').setView({lon: -78.63861, lat: 35.7721}, 6);
+//var map = L.map('map').setView({lon: -78.63861, lat: 35.7721}, 6);
+var map = L.map('map').setView({lon: -95, lat: 40}, 4);
 
 // add the OpenStreetMap tiles
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -7,28 +8,29 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
 }).addTo(map);
 
+
 // show the scale bar on the lower left corner
 L.control.scale({imperial: true, metric: true}).addTo(map);
 
-// show a marker on the map
-//L.marker({lon: -78.63861, lat: 35.7721}).bindPopup('Raleigh').addTo(map);
-
-/*
-var circle = L.circle({lon: -78.63861, lat: 35.7721}, {
-    color: 'red',
-    fillColor: '#f03',
-    fillOpacity: 0.5,
-    radius: 241401.6 //in meters
-}).addTo(map);
-
-document.getElementById('submit')
-  .addEventListener('click', function() {
-    addNewMarker(map);
-  });
-
-*/
+map.locate({setView: true, maxZoom: 6});
 
 var userMark;
+var cMark;
+
+function onLocationFound(e) {
+  cMark = new L.marker(e.latlng);
+  cMark.addTo(map)
+  cMark.bindPopup('Field Location').openPopup();
+}
+map.on('locationfound', onLocationFound);
+
+function onLocationError(e) {
+  alert(e.message);
+}
+map.on('locationerror', onLocationError);
+
+
+
 
 /*
 function addNewMarker(map) {
@@ -47,9 +49,6 @@ function addNewMarker(map) {
   getDistance(from, L.marker({lon: -78.63861, lat: 35.7721}).getLatLng());
   //L.marker({lon: lon, lat: lat}).bindPopup('newly added mark').addTo(map);
   console.log(navigator.geolocation.getCurrentPosition(printGeo));
-}
-function printGeo(geoPosition) {
- console.log(geoPosition);
 }
 */
 
@@ -76,7 +75,6 @@ function calculateDistance() {
     */
 }
 
-var cMark;
 function addCurrentLocation(cPos) {
   let cLon = cPos.coords.longitude;
   let cLat = cPos.coords.latitude;
@@ -85,7 +83,7 @@ function addCurrentLocation(cPos) {
   map.addLayer(cMark);
 }
 
-navigator.geolocation.getCurrentPosition(addCurrentLocation);
+//navigator.geolocation.getCurrentPosition(addCurrentLocation);
 
 
 
@@ -107,7 +105,6 @@ function calcDistanceBetweenTwoInputs() {
 
 }
 
-var circle100;
 var circle150;
 function processFirstResponse(data) {
   if (data) {
@@ -118,14 +115,13 @@ function processFirstResponse(data) {
     userMark.bindPopup('Work-Reporting Location');
     map.addLayer(userMark);
     addRLCircles(lon, lat);
+    let group = new L.featureGroup([userMark, cMark]);
+    map.fitBounds(group.getBounds());
     getDistance(userMark.getLatLng(), cMark.getLatLng());
   }
 }
 
 function clearRLMarks() {
-  if (circle100) {
-    map.removeLayer(circle100);
-  }
   if (circle150) {
     map.removeLayer(circle150);
   }
@@ -136,18 +132,11 @@ function clearRLMarks() {
 }
 function addRLCircles(lon, lat) {
   circle150 = L.circle({lon: lon, lat: lat}, {
-    color: 'red',
-    fillColor: '#f03',
+    color: 'black',
+    fillColor: '#444',
     fillOpacity: 0.4,
     radius: 277800 //in meters
   })
-  circle100 = L.circle({lon: lon, lat: lat}, {
-    color: 'blue',
-    fillColor: '#03f',
-    fillOpacity: 0.4,
-    radius: 185200 //in meters
-  })
   map.addLayer(circle150);
-  map.addLayer(circle100);
 }
 

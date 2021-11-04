@@ -1,6 +1,22 @@
 // initialize Leaflet
 var map = L.map('map').setView({lon: -95, lat: 40}, 4);
 
+var truck = L.icon({
+  iconUrl: 'truck.svg',
+
+  iconSize: [30,30],
+  iconAnchor: [15,15],
+  popupAnchor: [0, -15]
+});
+
+var reportingLocation = L.icon({
+  iconUrl: 'reportingLocation.svg',
+
+  iconSize: [46,46],
+  iconAnchor: [23,23],
+  popupAnchor: [0, -15]
+});
+
 // add the OpenStreetMap tiles
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 12,
@@ -19,9 +35,9 @@ var cMark;
 var circle150;
 
 function onLocationFound(e) {
-  cMark = new L.marker(e.latlng);
+  cMark = new L.marker(e.latlng, {icon: truck});
   cMark.addTo(map)
-  cMark.bindPopup('Field Location').openPopup();
+  cMark.bindPopup('Field Location');
 }
 map.on('locationfound', onLocationFound);
 
@@ -60,14 +76,20 @@ function processFirstResponse(data) {
     clearRLMarks();
     let lon = data[0].lon;
     let lat = data[0].lat;
-    userMark = new L.marker({lon: lon, lat: lat});
+    userMark = new L.marker({lon: lon, lat: lat}, {icon: reportingLocation});
     userMark.bindPopup('Work-Reporting Location');
     map.addLayer(userMark);
     addRLCircles(lon, lat);
-    let group = new L.featureGroup([userMark, cMark]);
-    map.fitBounds(group.getBounds());
+    if (!map.getBounds().contains(userMark.getLatLng())) {
+      resizeMap();
+    }
     getDistance(userMark.getLatLng(), cMark.getLatLng());
   }
+}
+
+function resizeMap() {
+  let group = new L.featureGroup([userMark, cMark]);
+  map.fitBounds(group.getBounds());
 }
 
 function clearRLMarks() {
@@ -126,7 +148,7 @@ function calcDistanceWithCurrentLocation(cPos) {
   let cLon = cPos.coords.longitude;
   let cLat = cPos.coords.latitude;
   userMark = new L.marker({lon: cLon, lat: cLat});
-  userMark.bindPopup('newly added mark').openPopup();
+  userMark.bindPopup('newly added mark');
   map.addLayer(userMark);
 
   fetch('https://nominatim.openstreetmap.org/search?format=json&q=' +

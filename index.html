@@ -29,26 +29,27 @@
 	</head>
   <body>
     <div id="floatingPanel">
-      <h1>Calculate Air Miles</h1>
+      <h1>Air Mile Distance</h1>
       <form onsubmit="return false">
-        <label>Field Location: (current location)
+        <label>Field Location: 
+          <input value="(current location)" disabled>
         </label>
         <label>Work-Reporting Location:
-          <input id="loc2"></input>
+          <input type="text" id="loc2">
         </label>
         
         <div hidden=true>
           <label>Longitude:
-            <input id="lon"></input>
+            <input id="lon">
           </label>
           <label>Latitude:
-            <input id="lat"></input>
+            <input id="lat">
           </label>
         </div>
 
-        <button id="calc">Calculate</button>
+        <button id="calc">Calculate Distance</button>
       </form>
-      <div id="distance"></div>
+      <strong>Distance: <span id="distance"><span></strong>
     </div>
     <div id="map"></div>
 

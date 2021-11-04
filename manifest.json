@@ -1,0 +1,16 @@
+{
+    "name": "Air Mile Distance",
+    "short_name": "AirMile",
+    "description": "Calculate air mile distance between two points",
+    "start_url": "https://airmiledistance.com",
+    "icons": [
+        {
+            "src": "blank.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#60757b",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}

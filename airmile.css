@@ -36,3 +36,10 @@ form {
 h1 {
   margin: 0.25em 0;
 }
+
+img {
+  width: 28px;
+  vertical-align: middle;
+  margin-right: .25em;
+}
+

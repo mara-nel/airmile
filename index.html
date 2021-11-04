@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8" />
-		<title>Maps</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Calculate air mile distance between two points.Quickly see if a commercial vehicle is beyond 150 air miles of its work reporting location and if the 150 air mile exemption is eligible.">
+    <meta charset="utf-8" />
+    <title>Air Mile Distance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Calculate air mile distance between two points.Quickly see if a commercial vehicle is beyond 150 air miles of its work reporting location and if the 150 air mile exemption is eligible." />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-       integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-       crossorigin=""/>
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-     crossorigin=""></script>
-     <script>
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""></script>
+    <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
           navigator.serviceWorker.register('sw.js').then(function(registration) {
@@ -24,30 +24,33 @@
         });
       }
     </script>
+    <link rel="stylesheet" href="airmile.css" />
     <link rel="manifest" href="manifest.json" />
 	</head>
-  <body style="background: #444;">
-    <div style="margin: auto; width: 80%; background: #fafafa; padding: 1em;">
+  <body>
+    <div id="floatingPanel">
       <h1>Calculate Air Miles</h1>
-      <label style="display: block">Field Location: (current location)
-      </label>
-      <label style="display: block">Work-Reporting Location:
-        <input id="loc2"></input>
-      </label>
-      
-      <div hidden=true>
-        <label style="display: block">Longitude:
-          <input id="lon"></input>
+      <form onsubmit="return false">
+        <label>Field Location: (current location)
         </label>
-        <label style="display: block">Latitude:
-          <input id="lat"></input>
+        <label>Work-Reporting Location:
+          <input id="loc2"></input>
         </label>
-      </div>
+        
+        <div hidden=true>
+          <label>Longitude:
+            <input id="lon"></input>
+          </label>
+          <label>Latitude:
+            <input id="lat"></input>
+          </label>
+        </div>
 
-      <button id="calc">Calculate</button>
+        <button id="calc">Calculate</button>
+      </form>
       <div id="distance"></div>
     </div>
-    <div id="map" style="height: 500px"></div>
+    <div id="map"></div>
 
 
 	</body>

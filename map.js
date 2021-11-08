@@ -48,7 +48,6 @@ map.on('locationerror', onLocationError);
 
 
 function getDistance(from, to) {
-  console.log('calcing distance');
   var container = document.getElementById('distance');
   container.innerHTML = ((from.distanceTo(to)/1852).toFixed(2)) + ' Air Miles';
 }
@@ -79,12 +78,18 @@ function processFirstResponse(data) {
     userMark = new L.marker({lon: lon, lat: lat}, {icon: reportingLocation});
     userMark.bindPopup('Work-Reporting Location');
     map.addLayer(userMark);
-    addRLCircles(lon, lat);
+    if (isCircleWanted()) {
+      addRLCircles(lon, lat);
+    }
     if (!map.getBounds().contains(userMark.getLatLng())) {
       resizeMap();
     }
     getDistance(userMark.getLatLng(), cMark.getLatLng());
   }
+}
+
+function isCircleWanted() {
+  return document.getElementById('includeCircle').checked;
 }
 
 function resizeMap() {

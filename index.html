@@ -31,15 +31,21 @@
     <div id="floatingPanel">
       <h1>Air Mile Distance</h1>
       <form onsubmit="return false">
+        <div class="container">
+          <label>
+            <img src="truck.svg" alt="icon of a commercial vehicle"/>
+            Field Location: 
+            <input value="(current location)" type="text" disabled>
+          </label>
+          <label>
+            <img src="reportingLocation.svg" alt="icon of a warehouse"/>
+            Work-Reporting Location:
+            <input type="text" id="loc2">
+          </label>
+        </div>
         <label>
-          <img src="truck.svg" alt="icon of a commercial vehicle"/>
-          Field Location: 
-          <input value="(current location)" disabled>
-        </label>
-        <label>
-          <img src="reportingLocation.svg" alt="icon of a warehouse"/>
-          Work-Reporting Location:
-          <input type="text" id="loc2">
+          <input type="checkbox" Checked>
+          Include 150 air mile radius around reporting location
         </label>
         
         <div hidden=true>

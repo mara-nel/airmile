@@ -8,6 +8,10 @@ html, body, #map {
   width: 100vw;
 }
 
+body {
+  font-family: Sans-Serif;
+}
+
 #map {
   z-index: 1;
 }
@@ -21,6 +25,7 @@ html, body, #map {
   padding: 0 .5em .5em .5em;
   border: 2px solid rgba(0,0,0,0.2);
   border-radius: 4px;
+  margin-right: 10px;
 }
 
 label, input  {
@@ -28,6 +33,14 @@ label, input  {
 }
 label {
   margin-bottom: .5em;
+  margin-right: .5em;
+  flex-grow: 1;
+}
+input[type='checkbox'] {
+  display: inline;
+}
+input[type='text'] {
+  width: calc(100% - .5em);
 }
 form {
   margin-bottom: .5em;
@@ -35,6 +48,7 @@ form {
 
 h1 {
   margin: 0.25em 0;
+  font-size: 1.8em;
 }
 
 img {
@@ -43,3 +57,8 @@ img {
   margin-right: .25em;
 }
 
+.container {
+  display: flex; 
+  flex-direction: row; 
+  flex-wrap: wrap;
+}
